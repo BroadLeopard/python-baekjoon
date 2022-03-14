@@ -15,14 +15,7 @@ for _ in range(T):
         H[i] = H[i-1] + 1 + (H[i-1] * ha + hb) % hc
         W[i] = (W[i-1] * wa + wb) % wc + 1
 
-
     answer = -1
 
-    for i in range(n-1, -1, -1):
-        for j in range(j, -1, -1):
-            if H[j] - H[i] <= x:
-                answer = max(answer, V[i] + V[j])
-            else:
-                break
 
     print(answer)

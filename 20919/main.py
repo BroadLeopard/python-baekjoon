@@ -4,7 +4,7 @@ T = int(sys.stdin.readline())
 
 for i in range(T):
     n, q = map(int, sys.stdin.readline().split())
-    S = list(map(int, sys.stdin.readline().split()))
+    S = set(map(int, sys.stdin.readline().split()))
 
     answer = 0
 
@@ -26,22 +26,17 @@ for i in range(T):
             print(answer)
 
         elif li[0] == 3:
-            S.append(li[1])
-            print(len(set(S)))
+            S.add(li[1])
+            print(len(S))
 
         elif li[0] == 4:
             answer = min(S)
-            print(answer)
-            cnt = S.count(answer)
+            S.remove(answer)
 
-            for i in range(cnt):
-                S.remove(answer)
+            print(answer)
 
         else:
             answer = max(S)
+            S.remove(answer)
+
             print(answer)
-
-            cnt = S.count(answer)
-
-            for i in range(cnt):
-                S.remove(answer)

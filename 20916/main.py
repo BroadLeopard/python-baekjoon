@@ -1,36 +1,20 @@
 import sys
 
-def func(num):
-    num = str(num)
-
-    if len(num) < 6:
-        return False
-
-    if num[:4] == "2020" and num[-4:] == "2021":
-        return True
-
-    return False
-
-
 T = int(sys.stdin.readline())
+
+l = [202021, 20202021, 202002021, 202012021, 202022021, 202032021, 202042021, 202052021, 202062021, 202072021, 202082021, 202092021]
 
 for i in range(T):
     n = int(sys.stdin.readline())
+    li = list(map(int, sys.stdin.readline().split()))
 
-    liA = list(map(int, sys.stdin.readline().split()))
-    setA = set(liA)
-    liA2 = list(setA)
-
-    length = len(liA2)
+    length = len(li)
 
     answer = 0
 
-    for i in range(length):
-        for j in range(i+1, length):
-            if func(liA2[i] + liA2[j]):
-                answer += liA.count(liA[i]) * liA.count(liA[j])
+    for j in range(length):
+        for k in range(j+1, length):
+            if (li[j] + li[k]) in l:
+                answer += 1
 
     print(answer)
-
-
-
