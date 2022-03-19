@@ -1,34 +1,33 @@
 import sys
 
-def func(num):
-    if li[num][0] == li[num][1]:
-        return li[num][0]
-    else:
-        return func(li[num][0])
 
+def func(num):#최상단 부모를 알려주는 역할로 나중에 내려옴
+    if li[num] == num:
+        return num
+
+    tmp = func(li[num])
+    li[num] = tmp
+    return tmp
 
 
 n, m = map(int, sys.stdin.readline().split())
 
-li = [0] * n + 1
+li = []
 
-for i in range(n+1):
-    li[i] = [i, i]
+for i in range(n+2):
+    li.append(i)
 
 for _ in range(m):
     i, a, b = map(int, sys.stdin.readline().split())
 
-    if i == 0:
+    if i == 0: #합집합
         ap = func(a)
         bp = func(b)
-        x = min(ap, bp)
-        li[a] = x
-        li[b] = x
 
-    else:
-
-
-        if li[a][0] == li[b][0]:
+        if ap != bp:
+            li[bp] = ap
+    else:#교집합
+        if func(a) == func(b):
             print("YES")
         else:
             print("NO")
