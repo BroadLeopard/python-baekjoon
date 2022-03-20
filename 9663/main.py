@@ -1,26 +1,52 @@
 import sys
 
-N = 0
+answer = 0
 
-def func(x, y, xl, yl):
-    if xl[x] or yl[y]:
-        return 0
+
+def func(x, cnt):#이번 단계에서 찍을 퀸의 행, 현재 있는 퀸의 수
+    if cnt == N:
+        global answer
+        answer += 1
+
+        # for t in range(N):
+        #     print(*nMap[t])
+
+       # print()
     else:
-        xl[x] = True
-        yl[y] = True
+        for k in range(N):
+            flag = False
 
-        if False not in xl and False not in yl:
-            return 1
-        else:
-            hap = 0
-            if x + 1 < N:
-                hap += func(x+1, y, xl, yl)
-            elif y + 1 < N:
-                hap += func(x, y+1, xl, yl)
-            return hap
+            for j in range(N):#같은 열에 있는지 확인
+                if nMap[j][k] == 1:
+                    flag = True
+                    break
+
+            if flag:
+                continue
+
+            for p in range(x + 1):
+                if 0 <= k - p and nMap[x-p][k-p] == 1:#왼쪽 대각선 확인
+                    flag = True
+                    break
+
+                if k + p < N and nMap[x-p][k+p] == 1:#오른쪽 대각선 확인
+                    flag = True
+                    break
+
+            if flag:
+                continue
+
+
+            nMap[x][k] = 1
+            func(x+1, cnt + 1)
+            nMap[x][k] = 0
+
 
 N = int(sys.stdin.readline())
-xl = [False] * N
-yl = [False] * N
+nMap = [[0 for _ in range(N)] for _ in range(N)]
 
-print(func(0, 0, xl, yl))
+func(0, 0)
+
+print(answer)
+
+

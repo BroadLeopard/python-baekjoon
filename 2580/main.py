@@ -1,60 +1,52 @@
 import sys
 
-sudoku = []
+sudoku = [0 for _ in range(9)]
 lis = []
 
+def xChk(x, i):
+    if i in sudoku[x]:  # x축 확인
+        return False
+    return True
 
-def func():
-    if not lis:
-        for p in range(9):
-            print(" ".join(list(map(str, sudoku[p]))))
+def yChk(y, i):
+    for k in range(9):
+        if sudoku[k][y] == i: #y축 확인
+            return False
 
-        print()
+    return True
 
-        return 1
+def boxChk(x, y, i):
+    a = x // 3 * 3
+    b = y // 3 * 3
+
+    for tmpMap in sudoku[a: a + 3]:  # 박스 확인
+        if i in tmpMap[b: b + 3]:
+            return False
+
+    return True
+
+
+def func(lisLength):
+    if lisLength == len(lis):
+        for p in sudoku:
+            print(*p)
+
+        exit(0)
 
     else:
-        x, y = lis.pop()
+        x, y = lis[lisLength]
         for i in range(1, 10):# i를 넣어도 되는지 확인
-            if i in sudoku[x]: #x축 확인
-                continue
-
-            flag = False
-
-            for k in range(9):
-                if sudoku[k][y] == i: #y축 확인
-                    flag = True
-
-            if flag:
-                continue
-
-            a = x // 3
-            b = y // 3
-
-            for tmpMap in sudoku[3 * a: 3 * a + 3]:# 박스 확인
-                if i in tmpMap[3 * b: 3 * b + 3]:
-                    flag = True
-                    break
-
-            if flag:
-                continue
-
-            sudoku[x][y] = i
-
-            if func():
-                return 1
-
-        sudoku[x][y] = 0
-        lis.append([x, y])
-        return 0
-
-
+            if xChk(x, i) and yChk(y, i) and boxChk(x, y, i):
+                sudoku[x][y] = i
+                func(lisLength + 1)
+                sudoku[x][y] = 0
 
 
 for i in range(9):
-    sudoku.append(list(map(int, sys.stdin.readline().split())))
+    sudoku[i] = list(map(int, sys.stdin.readline().split()))
+
     for j in range(9):
         if sudoku[i][j] == 0:
             lis.append([i, j])
 
-answer = func()
+func(0)
