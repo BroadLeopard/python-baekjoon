@@ -1,19 +1,45 @@
 import sys
 
-N, M = map(int, sys.stdin.readline())
+N, M = map(int, sys.stdin.readline().split())
+ans = 0
+nmap = []
 
-li = []
+for _ in range(N):
+    nmap.append(list(map(int, sys.stdin.readline().split())))
+
+
+pos = [[[0, 1], [0, 2], [0, 3]], #ㅡ
+        [[1, 0], [2, 0], [3, 0]], # ㅣ
+        [[0, 1], [1, 0], [1, 1]], # ㅁ
+        [[1, 0], [1, 1], [2, 0]],# ㅏ
+        [[1, 0], [1, -1], [2, 0]],#ㅓ
+        [[0, 1], [1, 1], [0, 2]], #ㅜ
+        [[0, 1], [0, 2], [-1, 1]], # ㅗ
+        [[1, 0], [1, 1], [2, 1]], #늑
+        [[1, 0], [1, -1], [2, -1]],
+        [[0, 1], [1, 1], [1, 2]],#ㄱㄴ
+        [[0, 1], [-1, 1], [-1, 2]],
+        [[0, 1], [0, 2], [1, 2]],#ㄱ
+        [[0, 1], [0, 2], [-1, 2]],
+        [[1, 0], [2, 0], [2, 1]],
+        [[0, 1], [1, 1], [2, 1]],
+        [[1, 0], [1, 1], [1, 2]], #ㄴ
+        [[0, -1], [0, -2], [1, -2]],
+        [[1, 0], [2, 0], [2, -1]],
+        [[0, -1], [1, -1], [2, -1]]]
+
 
 for i in range(N):
-    li.append(list(map(int, sys.stdin.readline())))
+    for j in range(M):
+        for li in pos:
+            tmp = nmap[i][j]
 
+            for x, y in li:
+                if 0 <= i + x < N and 0 <= j + y < M:
+                    tmp += nmap[i + x][j + y]
+                else:
+                    break
 
+            ans = max(ans, tmp)
 
-
-
-
-
-
-
-
-
+print(ans)
