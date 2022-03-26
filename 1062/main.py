@@ -23,16 +23,6 @@ for _ in range(N):
     tmp.remove('i')
     tmp.remove('c')
 
-    if len(tmp) == 0:
-        plus += 1
-
-    li.append(tmp)
-    alpha.update(tmp)
-
-
-
-
-print(answer + plus)
 
 
 
