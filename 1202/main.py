@@ -24,10 +24,11 @@ l = len(MV)
 
 for c in C:
     while i < l and MV[i][0] <= c:
-        heapq.heappush(hpq, (-MV[i][1], MV[i][1]))
+        heapq.heappush(hpq, -MV[i][1])
         i += 1
 
     if hpq:
-        ans += heapq.heappop(hpq)[1]
+        ans -= hpq[0]
+        heapq.heappop(hpq)
 
 print(ans)
